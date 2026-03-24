@@ -1,0 +1,117 @@
+"use client";
+
+import Link from "next/link";
+import { MeasurementPlan } from "@/lib/types";
+
+type Props = {
+  plan: MeasurementPlan;
+};
+
+export function SettingsPageContent({ plan }: Props) {
+  return (
+    <main className="grid-shell min-h-screen px-4 py-6 md:px-8 md:py-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+        <header className="panel rounded-card p-6 md:p-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-[rgba(223,244,240,0.52)]">Measurement plan</p>
+          <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl font-semibold leading-none md:text-6xl">
+            Measure trust, activation, and revenue without over-collecting.
+          </h1>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-[rgba(223,244,240,0.76)]">{plan.summary}</p>
+          <div className="mt-6">
+            <Link className="rounded-full border border-white/10 px-4 py-2 text-sm" href="/">
+              Back to weekly readout
+            </Link>
+          </div>
+        </header>
+
+        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)]">
+          <article className="panel rounded-card p-6 md:p-8">
+            <p className="text-xs uppercase tracking-[0.24em] text-[rgba(223,244,240,0.5)]">Tracked events</p>
+            <h2 className="mt-2 text-3xl font-semibold">{plan.title}</h2>
+            <div className="mt-6 space-y-4">
+              {plan.trackedEvents.map((event) => (
+                <div key={event.event} className="rounded-[22px] border border-white/10 bg-black/10 p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-lg font-medium text-[var(--color-cream)]">{event.event}</p>
+                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-[rgba(223,244,240,0.68)]">
+                      {event.owner}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-[rgba(223,244,240,0.74)]">{event.whyItMatters}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="panel rounded-card p-6 md:p-8">
+            <p className="text-xs uppercase tracking-[0.24em] text-[rgba(223,244,240,0.5)]">Core funnel</p>
+            <h2 className="mt-2 text-3xl font-semibold">What the team should watch every week.</h2>
+            <div className="mt-6 space-y-3">
+              {plan.funnelSteps.map((step) => (
+                <div key={step.step} className="rounded-[22px] border border-white/10 bg-black/10 p-4">
+                  <p className="text-lg font-medium text-[var(--color-cream)]">{step.step}</p>
+                  <p className="mt-2 text-sm text-[rgba(223,244,240,0.7)]">{step.metric}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[rgba(223,244,240,0.54)]">
+                    Benchmark: {step.benchmark}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="grid gap-6 lg:grid-cols-2">
+          <article className="panel rounded-card p-6 md:p-8">
+            <p className="text-xs uppercase tracking-[0.24em] text-[rgba(223,244,240,0.5)]">Instrumentation gaps</p>
+            <div className="mt-5 space-y-4">
+              {plan.instrumentationGaps.map((gap) => (
+                <div key={gap.issue} className="rounded-[22px] border border-white/10 bg-black/10 p-4">
+                  <p className="text-lg font-medium text-[var(--color-cream)]">{gap.issue}</p>
+                  <p className="mt-2 text-sm leading-6 text-[rgba(223,244,240,0.74)]">
+                    <strong className="font-semibold text-[var(--color-cream)]">Risk:</strong> {gap.risk}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[rgba(223,244,240,0.74)]">
+                    <strong className="font-semibold text-[var(--color-cream)]">Fix:</strong> {gap.fix}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="panel rounded-card p-6 md:p-8">
+            <p className="text-xs uppercase tracking-[0.24em] text-[rgba(223,244,240,0.5)]">Privacy & cost guardrails</p>
+            <div className="mt-5 space-y-4">
+              {plan.guardrails.map((guardrail) => (
+                <div key={guardrail.title} className="rounded-[22px] border border-white/10 bg-black/10 p-4">
+                  <p className="text-lg font-medium text-[var(--color-cream)]">{guardrail.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-[rgba(223,244,240,0.74)]">{guardrail.guidance}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="panel rounded-card p-6 md:p-8">
+          <p className="text-xs uppercase tracking-[0.24em] text-[rgba(223,244,240,0.5)]">Experiment backlog</p>
+          <h2 className="mt-2 text-3xl font-semibold">Three next bets to validate quickly.</h2>
+          <div className="mt-6 grid gap-4 lg:grid-cols-3">
+            {plan.experiments.map((experiment) => (
+              <article key={experiment.name} className="rounded-[24px] border border-white/10 bg-black/10 p-5">
+                <p className="text-xl font-semibold text-[var(--color-cream)]">{experiment.name}</p>
+                <p className="mt-3 text-sm leading-6 text-[rgba(223,244,240,0.74)]">{experiment.hypothesis}</p>
+                <p className="mt-4 text-xs uppercase tracking-[0.18em] text-[rgba(223,244,240,0.54)]">
+                  Success metric
+                </p>
+                <p className="mt-1 text-sm text-[rgba(223,244,240,0.82)]">{experiment.successMetric}</p>
+                <p className="mt-4 text-xs uppercase tracking-[0.18em] text-[rgba(223,244,240,0.54)]">
+                  Expected lift
+                </p>
+                <p className="mt-1 text-sm text-[rgba(223,244,240,0.82)]">{experiment.expectedLift}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}

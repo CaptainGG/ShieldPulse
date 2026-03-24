@@ -1,0 +1,16 @@
+node_modules/
+.next/
+dist/
+coverage/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.venv/
+.env
+.env.local
+apps/api/.venv/
+apps/api/.ruff_cache/
+apps/api/.coverage
+apps/api/oracle.db
+apps/web/.next/
+apps/web/tsconfig.tsbuildinfo

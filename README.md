@@ -103,6 +103,4 @@ NEXT_PUBLIC_AMPLITUDE_API_KEY=your_amplitude_api_key
 NEXT_PUBLIC_ENABLE_LOCAL_ANALYTICS_DEBUG=false
 ```
 
-## Portfolio Positioning
 
-This project is independent portfolio work inspired by mobile security analytics challenges. It is not affiliated with or based on any internal company systems, data, or confidential materials.

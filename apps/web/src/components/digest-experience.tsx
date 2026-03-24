@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import { DomainJumpNav } from "@/components/domain-jump-nav";
 import { KpiStrip } from "@/components/kpi-strip";
 import { ScenarioCard } from "@/components/scenario-card";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 import { WeeklyInsightReport, workstreamMeta } from "@/lib/types";
 
 type Props = {
@@ -12,6 +14,23 @@ type Props = {
 };
 
 export function DigestExperience({ report, isArchive = false }: Props) {
+  useEffect(() => {
+    if (isArchive) {
+      void trackAnalyticsEvent("prior_week_compared", {
+        report_date: report.reportDate,
+        surface: "weekly_readout",
+        archive_mode: true
+      });
+      return;
+    }
+
+    void trackAnalyticsEvent("weekly_readout_viewed", {
+      report_date: report.reportDate,
+      surface: "weekly_readout",
+      archive_mode: false
+    });
+  }, [isArchive, report.reportDate]);
+
   return (
     <main className="grid-shell min-h-screen px-4 py-6 md:px-8 md:py-8">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
@@ -90,7 +109,7 @@ export function DigestExperience({ report, isArchive = false }: Props) {
         <section className="space-y-6">
           {report.workstreams.map((insight) => (
             <div key={insight.id} className="scroll-mt-24" id={insight.workstream}>
-              <ScenarioCard insight={insight} />
+              <ScenarioCard insight={insight} reportDate={report.reportDate} archiveMode={isArchive} />
             </div>
           ))}
         </section>

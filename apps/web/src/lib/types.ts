@@ -84,6 +84,26 @@ export type ExperimentPlan = {
   expectedLift: string;
 };
 
+export type AnalyticsInstrumentationEvent = {
+  name: string;
+  trigger: string;
+  amplitudeSurface: string;
+  keyProperties: string[];
+};
+
+export type AnalyticsInstrumentationProperty = {
+  property: string;
+  description: string;
+  example: string;
+};
+
+export type AnalyticsInstrumentationPlan = {
+  summary: string;
+  cohortDimensions: string[];
+  events: AnalyticsInstrumentationEvent[];
+  exampleProperties: AnalyticsInstrumentationProperty[];
+};
+
 export type MeasurementPlan = {
   title: string;
   summary: string;
@@ -92,6 +112,7 @@ export type MeasurementPlan = {
   instrumentationGaps: InstrumentationGap[];
   guardrails: Guardrail[];
   experiments: ExperimentPlan[];
+  analyticsInstrumentation: AnalyticsInstrumentationPlan;
 };
 
 export const workstreamMeta: Record<

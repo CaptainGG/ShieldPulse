@@ -1,16 +1,31 @@
+"use client";
+
+import { useTrackOnceOnView } from "@/lib/analytics";
 import { SignalBreakdownDrawer } from "@/components/signal-breakdown-drawer";
 import { WorkstreamInsight, workstreamMeta } from "@/lib/types";
 import { ConfidenceBar } from "./confidence-bar";
 
 type Props = {
   insight: WorkstreamInsight;
+  reportDate: string;
+  archiveMode: boolean;
 };
 
-export function ScenarioCard({ insight }: Props) {
+export function ScenarioCard({ insight, reportDate, archiveMode }: Props) {
   const tone = workstreamMeta[insight.workstream].accent;
+  const trackRef = useTrackOnceOnView(
+    "workstream_section_viewed",
+    {
+      report_date: reportDate,
+      workstream: insight.workstream,
+      surface: "weekly_readout",
+      archive_mode: archiveMode
+    },
+    insight.id
+  );
 
   return (
-    <article className="panel rounded-card p-6 md:p-8">
+    <article ref={trackRef} className="panel rounded-card p-6 md:p-8">
       <div className="flex flex-wrap items-start justify-between gap-6">
         <div className="max-w-3xl">
           <p className="text-xs uppercase tracking-[0.3em] text-[rgba(223,244,240,0.52)]">
@@ -53,8 +68,12 @@ export function ScenarioCard({ insight }: Props) {
               </p>
               <div className="mt-4">
                 <SignalBreakdownDrawer
+                  archiveMode={archiveMode}
                   evidence={insight.evidence}
+                  recommendationId={recommendation.id}
+                  reportDate={reportDate}
                   supportingEvidenceIds={recommendation.supportingEvidenceIds}
+                  workstream={insight.workstream}
                 />
               </div>
             </section>

@@ -4,9 +4,28 @@ import React from "react";
 import { ScenarioCard } from "@/components/scenario-card";
 import { mockCurrentReport } from "@/lib/mock-data";
 
+class MockIntersectionObserver {
+  observe() {}
+  disconnect() {}
+  unobserve() {}
+}
+
 describe("ScenarioCard", () => {
+  beforeAll(() => {
+    Object.defineProperty(window, "IntersectionObserver", {
+      writable: true,
+      value: MockIntersectionObserver
+    });
+  });
+
   it("renders a workstream headline and evidence drawer", () => {
-    render(<ScenarioCard insight={mockCurrentReport.workstreams[0]} />);
+    render(
+      <ScenarioCard
+        archiveMode={false}
+        insight={mockCurrentReport.workstreams[0]}
+        reportDate={mockCurrentReport.reportDate}
+      />
+    );
 
     expect(screen.getByText(/store conversion is rebounding/i)).toBeInTheDocument();
     expect(screen.getAllByText(/analyst confidence/i)[0]).toBeInTheDocument();

@@ -631,7 +631,88 @@ export const mockMeasurementPlan: MeasurementPlan = {
       successMetric: "Trial start rate and trial-to-paid conversion",
       expectedLift: "+0.7 pts trial start, +2 pts paid conversion"
     }
-  ]
+  ],
+  analyticsInstrumentation: {
+    summary:
+      "ShieldPulse now includes a real browser-side Amplitude integration with typed events for the weekly readout, comparison flow, evidence interactions, and measurement-plan engagement.",
+    cohortDimensions: [
+      "Store platform (iOS vs Android)",
+      "Archive vs current-week readout",
+      "Workstream viewed",
+      "Recommendation and evidence source engagement"
+    ],
+    events: [
+      {
+        name: "weekly_readout_viewed",
+        trigger: "Triggered when the current-week executive readout loads.",
+        amplitudeSurface: "weekly_readout",
+        keyProperties: ["report_date", "surface", "archive_mode"]
+      },
+      {
+        name: "prior_week_compared",
+        trigger: "Triggered when a prior-week comparison page is opened.",
+        amplitudeSurface: "weekly_readout",
+        keyProperties: ["report_date", "surface", "archive_mode"]
+      },
+      {
+        name: "measurement_plan_viewed",
+        trigger: "Triggered when the instrumentation page is opened.",
+        amplitudeSurface: "measurement_plan",
+        keyProperties: ["surface"]
+      },
+      {
+        name: "workstream_section_viewed",
+        trigger: "Triggered once when a workstream section enters view.",
+        amplitudeSurface: "weekly_readout",
+        keyProperties: ["report_date", "workstream", "surface", "archive_mode"]
+      },
+      {
+        name: "evidence_pack_opened",
+        trigger: "Triggered when a recommendation's evidence drawer is expanded.",
+        amplitudeSurface: "evidence_pack",
+        keyProperties: ["report_date", "workstream", "recommendation_id", "surface", "archive_mode"]
+      },
+      {
+        name: "source_reference_clicked",
+        trigger: "Triggered when a supporting source link is clicked.",
+        amplitudeSurface: "evidence_pack",
+        keyProperties: ["report_date", "workstream", "recommendation_id", "evidence_source", "surface", "archive_mode"]
+      },
+      {
+        name: "experiment_backlog_item_viewed",
+        trigger: "Triggered once when an experiment card scrolls into view.",
+        amplitudeSurface: "measurement_plan",
+        keyProperties: ["experiment_name", "surface"]
+      }
+    ],
+    exampleProperties: [
+      {
+        property: "report_date",
+        description: "Which reporting window the user is analyzing.",
+        example: "2026-03-20"
+      },
+      {
+        property: "workstream",
+        description: "Which analyst workstream or section is in focus.",
+        example: "activation"
+      },
+      {
+        property: "recommendation_id",
+        description: "Which recommendation generated the evidence interaction.",
+        example: "act-rec-1"
+      },
+      {
+        property: "evidence_source",
+        description: "Which evidence source was clicked from the drawer.",
+        example: "Amplitude"
+      },
+      {
+        property: "archive_mode",
+        description: "Whether the user is looking at the current week or a comparison view.",
+        example: "true"
+      }
+    ]
+  }
 };
 
 export function getMockReport(date?: string): WeeklyInsightReport {

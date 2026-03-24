@@ -45,6 +45,15 @@ This gives the project a believable analyst narrative without needing a large co
 - Warehouse snapshot: weekly protected devices, trial starts, paid conversion
 - Support sentiment: permission confusion, setup complexity, and qualitative trust feedback
 
+## Amplitude Demo Integration
+
+ShieldPulse now includes a real browser-side Amplitude demo integration in the web app.
+
+- The app uses a small local analytics wrapper instead of calling the SDK directly
+- Typed events are fired for weekly readout views, prior-week comparisons, workstream visibility, evidence drawer opens, source clicks, and experiment backlog visibility
+- The measurement-plan page documents the event taxonomy, key cohort dimensions, and example properties
+- The integration is optional: if `NEXT_PUBLIC_AMPLITUDE_API_KEY` is not configured, the app still runs normally
+
 ## Key Findings
 
 1. Acquisition is improving, especially on iOS, after the creative refresh.
@@ -86,3 +95,14 @@ This gives the project a believable analyst narrative without needing a large co
 4. Run `uvicorn app.main:app --reload --app-dir apps/api`
 
 The web app is intentionally mock-friendly, so the case study still works even if the API is not running.
+
+To enable live Amplitude tracking in the frontend, add these values to `apps/web/.env.local`:
+
+```env
+NEXT_PUBLIC_AMPLITUDE_API_KEY=your_amplitude_api_key
+NEXT_PUBLIC_ENABLE_LOCAL_ANALYTICS_DEBUG=false
+```
+
+## Portfolio Positioning
+
+This project is independent portfolio work inspired by mobile security analytics challenges. It is not affiliated with or based on any internal company systems, data, or confidential materials.

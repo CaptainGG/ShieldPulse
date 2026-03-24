@@ -86,7 +86,3 @@ This gives the project a believable analyst narrative without needing a large co
 4. Run `uvicorn app.main:app --reload --app-dir apps/api`
 
 The web app is intentionally mock-friendly, so the case study still works even if the API is not running.
-
-## Portfolio Positioning
-
-This project is independent portfolio work inspired by mobile security analytics challenges. It is not affiliated with or based on internal Malwarebytes systems, data, or confidential materials.

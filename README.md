@@ -6,7 +6,7 @@ Problem statement: how should a mobile security team use telemetry, store data, 
 
 ## What This Project Shows
 
-- A portfolio-safe weekly executive readout for a subscription mobile security app
+- A weekly executive readout for a subscription mobile security app
 - A concise KPI layer covering acquisition, activation, protection usage, and retention
 - Evidence-backed recommendations grounded in Amplitude-style funnels, app store analytics, Firebase telemetry, and qualitative support signals
 - A measurement-plan page that makes the analyst thinking explicit: event taxonomy, funnel definitions, instrumentation gaps, privacy guardrails, and experiment ideas
